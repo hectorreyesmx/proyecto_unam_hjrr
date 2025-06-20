@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION func_nuevo_domicilio()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO movimientos (persona_id, tipo_movimiento, fecha_movimiento, observaciones)
+  VALUES ((select persona_id from domicilios where id=(select max(id) from domicilios)), 'Nuevo Domicilio', now(), 'Quien: '||user||' Tabla: '||TG_TABLE_NAME);
+  RETURN OLD; 
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_nuevo_domicilio
+AFTER INSERT
+ON domicilios
+FOR EACH ROW
+EXECUTE FUNCTION func_nuevo_domicilio();
