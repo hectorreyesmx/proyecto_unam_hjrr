@@ -1,0 +1,288 @@
+
+CREATE TABLE personas (
+id SERIAL PRIMARY KEY,
+nombre_completo varchar(150) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+sexo CHAR(1) CHECK (sexo IN ('M','F','O')),
+nacionalidad VARCHAR(50),
+estado_civil VARCHAR(50),
+fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE domicilios (
+id SERIAL PRIMARY KEY,
+persona_id INTEGER REFERENCES personas(id),
+direccion VARCHAR(250),
+ciudad VARCHAR(100),
+estado VARCHAR(100),
+codigo_postal VARCHAR(20)
+);
+
+CREATE TABLE movimientos (
+id SERIAL PRIMARY KEY,
+persona_id INTEGER REFERENCES personas(id),
+tipo_movimiento VARCHAR(100),
+fecha_movimiento DATE,
+observaciones TEXT
+);
+
+CREATE MATERIALIZED VIEW resumen_movimientos AS
+SELECT p.id,p.nombre_completo,
+	COUNT(m.id) AS total_movimientos,
+	MAX(m.fecha_movimiento) AS ultimo_movimiento
+FROM personas p
+LEFT JOIN movimientos m ON p.id=m.persona_id
+GROUP BY p.id, p.nombre_completo;
+
+
+
+
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Juan Perez','1988-08-06','M','Colombia','Soltero');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Casandra Díaz','1974-11-07','F','Guatemala','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Pedro Domínguez','1975-08-24','M','El Salvador','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Perla Zamarripa','1981-01-04','F','Ecuador','Viuda');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Maria Peñaloza','1991-12-24','F','Perú','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Perla Gómez','1978-08-06','F','Venezuela','Soltera');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Pedro Mendoza','1964-11-07','M','México','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Roberto Perez','1991-08-21','M','Belice','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Esmeralda Chavez','1986-12-04','F','Brasil','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Juana Vivanco','1968-02-14','F','México','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Juana Gómez','1967-08-06','F','Venezuela','Soltera');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Nicandro Mendoza','1983-11-07','M','México','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Javier Perez','1992-08-21','M','Belice','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Gabriela Chavez','1974-12-04','F','Brasil','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Manuela Zamora','1994-02-14','F','México','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Matias Galvez','1988-08-06','M','Colombia','Soltero');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Alejandra Mendoza','1974-11-07','F','Guatemala','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Julian Mendez','1975-08-24','M','El Salvador','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Margarita Zamora','1981-01-04','F','Ecuador','Viuda');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Esperanza Alejo','1991-12-24','F','Perú','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Leonor Becerril','1973-08-06','F','Venezuela','Soltera');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Jacinto Baez','1988-11-07','M','México','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Homero Alanis','1983-08-21','M','Belice','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Guadalupe Rosales','1993-12-04','F','Brasil','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Mia Lopez','1963-02-14','F','México','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Carlos Mendoza','1994-11-07','M','México','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Margarito Bolaños','1966-08-21','M','Belice','Casado');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Dulce Fernandez','1974-12-04','F','Brasil','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Karla Mendoza','1995-02-14','F','México','Casada');
+
+INSERT INTO personas 
+(nombre_completo,fecha_nacimiento,sexo,nacionalidad,estado_civil)
+VALUES('Angela Bautista','1974-08-06','F','Venezuela','Soltera');
+
+
+
+
+
+
+
+
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(1,'Calle Agua Azul 28','Barranquilla','Atlántico','14023');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(4,'Av Constitución 345','Villa nueva','El Progreso','04778');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(3,'El Recreo 111','Santa María','San Salvador','04561');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(6,'Av Bolívar 732','San Miguel','Quito','17045');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(5,'Calle San Pedro 461','Barrio La Paz','Lima','14532');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(7,'Calle Agua 98','Caracas','Maracaibo','18222');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(8,'Av Lerma 45','Lerma','EdoMex','047331');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(9,'Maizal 662','Belice','Belmopán','52245');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(10,'Av La paz 323','Caetano','Botafogo','17345');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(11,'Calle Cafetales 42','Iztacaldo','CDMX','14230');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(12,'El Recreo 191','Santa María','La paz','04561');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(13,'Av Mexicali 7322','San Miguel','Mineral','17045');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(14,'Calle El faraón 41','Barrio La Paz','San Angel','14532');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(15,'Calle Venustiano 938','Caracas','Mendoza','18222');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(16,'Av Central 452','Lerma','Puerto Madero','047331');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(17,'Calle Agua 98','San Lucas','Maracaibo','18222');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(18,'Av Lerma 45','Centro','EdoMex','047331');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(19,'Maizal 662','Balsas','Bello monte','52245');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(20,'Av La paz 323','Santo Domingo','Botafogo','17345');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(21,'Calle Cafetales 42','Manzanillo','CDMX','14230');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(22,'El Palomar 11','Mina','La paz','04531');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(23,'Av Manuel Avila 722','San Diego','Mineral','17545');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(24,'Calle El Carrizal 47','Barrio La Asunción','San Angel','14752');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(25,'Calle Carranza 928','Mochis','Mendoza','18642');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(26,'Av Aeropuerto 452','Manacar','Puerto Madero','04231');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(27,'Calle Manglares 928','Minería','Maracaibo','17522');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(28,'Av El Salado 425','El Salado','EdoMex','04731');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(29,'Carrizal 62','Monte Bello','Belmopán','52935');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(30,'Av Del Monte 3723','San Juan','Botafogo','13565');
+
+INSERT INTO domicilios 
+(persona_id,direccion,ciudad,estado,codigo_postal)
+VALUES(31,'Calle Diego Ordaz 4772','Central Norte','CDMX','14110');
+
